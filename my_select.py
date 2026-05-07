@@ -4,7 +4,6 @@ from conf.models import Student, Grade, Subject, Teacher, Group
 
 
 def select_1():
-    """1. Знайти 5 студентів із найбільшим середнім балом з усіх предметів."""
     return (
         session.query(Student.fullname, func.avg(Grade.grade).label("avg_grade"))
         .join(Grade, Student.id == Grade.student_id)
@@ -16,7 +15,6 @@ def select_1():
 
 
 def select_2(subject_id: int):
-    """2. Знайти студента із найвищим середнім балом з певного предмета."""
     return (
         session.query(Student.fullname, func.avg(Grade.grade).label("avg_grade"))
         .join(Grade, Student.id == Grade.student_id)
@@ -28,7 +26,6 @@ def select_2(subject_id: int):
 
 
 def select_3(subject_id: int):
-    """3. Знайти середній бал у групах з певного предмета."""
     return (
         session.query(Group.name, func.avg(Grade.grade).label("avg_grade"))
         .join(Student, Group.id == Student.group_id)
@@ -40,12 +37,10 @@ def select_3(subject_id: int):
 
 
 def select_4():
-    """4. Знайти середній бал на потоці (по всій таблиці оцінок)."""
     return session.query(func.avg(Grade.grade).label("avg_grade")).scalar()
 
 
 def select_5(teacher_id: int):
-    """5. Знайти які курси читає певний викладач."""
     return (
         session.query(Subject.name)
         .filter(Subject.teacher_id == teacher_id)
@@ -54,7 +49,6 @@ def select_5(teacher_id: int):
 
 
 def select_6(group_id: int):
-    """6. Знайти список студентів у певній групі."""
     return (
         session.query(Student.fullname)
         .filter(Student.group_id == group_id)
@@ -63,7 +57,6 @@ def select_6(group_id: int):
 
 
 def select_7(group_id: int, subject_id: int):
-    """7. Знайти оцінки студентів у окремій групі з певного предмета."""
     return (
         session.query(Student.fullname, Grade.grade, Grade.grade_date)
         .join(Grade, Student.id == Grade.student_id)
@@ -73,7 +66,6 @@ def select_7(group_id: int, subject_id: int):
 
 
 def select_8(teacher_id: int):
-    """8. Знайти середній бал, який ставить певний викладач зі своїх предметів."""
     return (
         session.query(func.avg(Grade.grade).label("avg_grade"))
         .join(Subject, Grade.subject_id == Subject.id)
@@ -83,7 +75,6 @@ def select_8(teacher_id: int):
 
 
 def select_9(student_id: int):
-    """9. Знайти список курсів, які відвідує певний студент."""
     return (
         session.query(Subject.name)
         .join(Grade, Subject.id == Grade.subject_id)
@@ -94,7 +85,6 @@ def select_9(student_id: int):
 
 
 def select_10(student_id: int, teacher_id: int):
-    """10. Список курсів, які певному студенту читає певний викладач."""
     return (
         session.query(Subject.name)
         .join(Grade, Subject.id == Grade.subject_id)
